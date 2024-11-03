@@ -7,14 +7,11 @@ const planRoutes = require("./routes/planRoutes");
 
 const app = express();
 
-// Connect to MongoDB
 connectDB();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/users", userRoutes);
 app.use("/api/plans", planRoutes);
 
