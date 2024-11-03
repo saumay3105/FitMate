@@ -1,0 +1,94 @@
+.card {
+    width: 100%;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #1F1F2E;;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card-title {
+    font-size: 1.8em;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: white;
+  }
+  
+  .alert {
+    color: #d9534f;
+    margin-bottom: 20px;
+    padding: 12px;
+    width: 100%;
+    text-align: center;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #e5dbdb;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1em;
+    color: #7a7575;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.1em;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .link-container {
+    color: #f0eded;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 1em;
+  }
+  
+  .link-container a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .link-container a:hover {
+    
+    text-decoration: underline;
+  }
