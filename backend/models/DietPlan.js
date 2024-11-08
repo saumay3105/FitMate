@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const dietPlanSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User model
+  email: {
+    type: String,
+    ref: "User",
     required: true,
   },
   planId: {
@@ -27,8 +27,40 @@ const dietPlanSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      macros: {
+        proteins: {
+          type: Number,
+          required: true,
+        },
+        carbohydrates: {
+          type: Number,
+          required: true,
+        },
+        fats: {
+          type: Number,
+          required: true,
+        },
+      },
     },
   ],
+  dailyTotalMacros: {
+    calories: {
+      type: Number,
+      required: true,
+    },
+    proteins: {
+      type: Number,
+      required: true,
+    },
+    carbohydrates: {
+      type: Number,
+      required: true,
+    },
+    fats: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 
 const DietPlan = mongoose.model("DietPlan", dietPlanSchema);
