@@ -8,23 +8,27 @@ import { AuthProvider } from "./context/AuthContext";
 import Signup from "./pages/SignUp/Signup";
 import Navbar from "./components/Navbar";
 import ForgotPassword from "./pages/ForgotPassword";
+import WorkoutPage from "./pages/WorkoutPage";
+import Profile
+ from "./pages/Profile";
 function App() {
   const [count, setCount] = useState(0);
   return (
-    <div className="hero">
-      
+    <>
       <Router>
         <AuthProvider>
-        <Navbar />
+          <Navbar />
           <Routes>
-            <Route path="/" element={<Home/>} />
+            <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword/>} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/workout" element={<WorkoutPage />} />
           </Routes>
         </AuthProvider>
       </Router>
-    </div>
+    </>
   );
 }
 

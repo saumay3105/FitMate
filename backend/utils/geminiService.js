@@ -7,16 +7,18 @@ class GeminiService {
   }
 
   sanitizeJsonString(str) {
-  str = str.replace(/```json\s*|\s*```/g, "");  // Remove any markdown formatting
-  str = str.trim();
-  str = str.replace(/\\([^\w\s])/g, '\\\\$1');  // Escape backslashes correctly
-  str = str.replace(/(\w+):/g, '"$1":');  // Ensure keys are in double quotes
-  str = str.replace(/'([^']+)'/g, '"$1"');  // Ensure string values are in double quotes
-  str = str.replace(/}\s*{/g, "},{");  // Fix broken object boundaries
-  str = str.replace(/,\s*$/, '');  // Remove trailing commas
-  return str;
-}
+    str = str.replace(/```json\s*|\s*```/g, ""); // Remove any markdown formatting
+    str = str.trim();
+    str = str.replace(/\\([^\w\s])/g, "\\\\$1"); // Escape backslashes correctly
+    str = str.replace(/(\w+):/g, '"$1":'); // Ensure keys are in double quotes
+    str = str.replace(/'([^']+)'/g, '"$1"'); // Ensure string values are in double quotes
+    str = str.replace(/}\s*{/g, "},{"); // Fix broken object boundaries
+    str = str.replace(/,\s*$/, ""); // Remove trailing commas
 
+    str = str.replace(/"reps":\s*(\d+)-\d+/g, '"reps": $1');
+
+    return str;
+  }
 
   validateWorkoutPlan(plan, email) {
     if (!plan.planId || !plan.weeklySchedule) {
@@ -105,13 +107,15 @@ class GeminiService {
     };
   }
 
-  async generateWorkoutPlan(userProfile, additionalComment="") {
+  async generateWorkoutPlan(userProfile, additionalComment = "") {
     const prompt = `Generate a comprehensive weekly workout plan in pure JSON format (no markdown, no code blocks) for a user with the following profile:
 Age: ${userProfile.age}
 Weight: ${userProfile.weight}kg
 Height: ${userProfile.height}cm
 Fitness Goals: ${userProfile.fitnessGoals.join(", ")}
 Additional Requirements: ${additionalComment};
+
+Important: Use single numbers for reps, not ranges.
 
 
 make sure the response is just json, nothing else, with no syntax errors, make sure array syntax is proper...
@@ -211,7 +215,7 @@ The plan should include exercises for each day of the week, considering rest day
     }
   }
 
-  async generateDietPlan(userProfile, additionalComment="") {
+  async generateDietPlan(userProfile, additionalComment = "") {
     const prompt = `Generate a comprehensive diet plan in pure JSON format (no markdown, no code blocks) for a user with the following profile:
 Age: ${userProfile.age}
 Weight: ${userProfile.weight}kg

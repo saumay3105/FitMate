@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom"; // Import Link for routing
+import { Link, useNavigate } from "react-router-dom"; // Import Link for routing
 import "./Navbar.css";
 import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [error, setError] = useState("");
-  const { currentUser,logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const isLoggedIn = !!currentUser;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   async function handleLogOut() {
     setError("");
     try {
@@ -27,7 +27,7 @@ const Navbar = () => {
         </Link>
 
         <div className="nav-links">
-          <Link to="#fitness" className="nav-link">
+          <Link to="/workout" className="nav-link">
             Fitness
           </Link>
           <Link to="#nutrition" className="nav-link">
@@ -48,7 +48,14 @@ const Navbar = () => {
             <div className="user-section">
               <span className="user-greeting">Hi, {currentUser.email}</span>
               <button className="cta-button">My Profile</button>
-              <button className="cta-button" variant="link" onClick={handleLogOut}> Log Out</button>
+              <button
+                className="cta-button"
+                variant="link"
+                onClick={handleLogOut}
+              >
+                {" "}
+                Log Out
+              </button>
             </div>
           ) : (
             <>
@@ -71,7 +78,7 @@ const Navbar = () => {
       </div>
 
       <div className={`mobile-menu ${isMobileMenuOpen ? "active" : ""}`}>
-        <Link to="#fitness" className="nav-link">
+        <Link to="/workout" className="nav-link">
           Fitness
         </Link>
         <Link to="#nutrition" className="nav-link">
@@ -85,7 +92,14 @@ const Navbar = () => {
           <div className="user-section">
             <span className="user-greeting">Hi,{currentUser.email}</span>
             <button className="cta-button">My Profile</button>
-            <button className="cta-button" variant="link" onClick={handleLogOut}> Log Out</button>
+            <button
+              className="cta-button"
+              variant="link"
+              onClick={handleLogOut}
+            >
+              {" "}
+              Log Out
+            </button>
           </div>
         ) : (
           <>

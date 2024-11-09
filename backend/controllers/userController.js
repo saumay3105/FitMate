@@ -1,17 +1,28 @@
 const User = require("../models/User");
 
 const userController = {
+  // Create a new user
   async createUser(req, res) {
     try {
-      const { email, age, weight, height, fitnessGoals, dietaryPreferences } =
-        req.body;
+      const {
+        fullName,
+        email,
+        age,
+        weight,
+        height,
+        fitnessGoals,
+        dietaryPreferences,
+      } = req.body;
 
+      // Check if user already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: "User already exists" });
       }
 
+      // Create and save the new user
       const user = new User({
+        fullName,
         email,
         age,
         weight,
@@ -27,6 +38,7 @@ const userController = {
     }
   },
 
+  // Update an existing user
   async updateUser(req, res) {
     try {
       const { email } = req.params;
@@ -47,6 +59,7 @@ const userController = {
     }
   },
 
+  // Get a user by email
   async getUser(req, res) {
     try {
       const { email } = req.params;

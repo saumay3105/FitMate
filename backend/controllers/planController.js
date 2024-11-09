@@ -275,7 +275,10 @@ const planController = {
       await WorkoutPlan.findOneAndDelete({ email });
 
       // Generate new workout plan with additional comment
-      const workoutPlan = await geminiService.generateWorkoutPlan(user, additionalComment);
+      const workoutPlan = await geminiService.generateWorkoutPlan(
+        user,
+        additionalComment
+      );
       const newWorkoutPlan = new WorkoutPlan({
         email: user.email,
         planId: workoutPlan.planId,
@@ -305,7 +308,10 @@ const planController = {
       await DietPlan.findOneAndDelete({ email });
 
       // Generate new diet plan with additional comment
-      const dietPlan = await geminiService.generateDietPlan(user, additionalComment);
+      const dietPlan = await geminiService.generateDietPlan(
+        user,
+        additionalComment
+      );
 
       const newDietPlan = new DietPlan({
         email: user.email,
@@ -322,6 +328,5 @@ const planController = {
     }
   },
 };
-
 
 module.exports = planController;

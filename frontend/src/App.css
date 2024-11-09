@@ -3,14 +3,7 @@ body {
   padding: 0;
   min-height: 100vh;
   background: linear-gradient(135deg, #12121F 0%, #1A1A2E 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   font-family: Arial, sans-serif;
   color: #FFFFFF;
-}
-.hero{
-  display: flex;
-  width: 100%;
-  flex-direction: column;
 }
