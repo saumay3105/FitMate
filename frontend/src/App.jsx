@@ -9,10 +9,9 @@ import Signup from "./pages/SignUp/Signup";
 import Navbar from "./components/Navbar";
 import ForgotPassword from "./pages/ForgotPassword";
 import WorkoutPage from "./pages/WorkoutPage";
-import Profile
- from "./pages/Profile";
+import Profile from "./pages/Profile";
+import DietPlan from "./pages/DietPlan";
 function App() {
-  const [count, setCount] = useState(0);
   return (
     <>
       <Router>
@@ -25,6 +24,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/workout" element={<WorkoutPage />} />
+            <Route path="/dietplan" element={<DietPlan />} />
           </Routes>
         </AuthProvider>
       </Router>

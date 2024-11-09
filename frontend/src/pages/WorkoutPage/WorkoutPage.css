@@ -73,12 +73,10 @@ font-family: 'Inter', sans-serif;
 .btn.primary {
     background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
 }
 
 .btn.primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
 }
 
 .btn.secondary {
@@ -224,7 +222,6 @@ font-family: 'Inter', sans-serif;
     font-size: 2rem;
     margin-bottom: 2rem;
     text-align: center;
-    text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
 }
 
 .days-grid {

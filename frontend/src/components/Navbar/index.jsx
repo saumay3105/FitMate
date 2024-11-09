@@ -34,7 +34,7 @@ const Navbar = () => {
           <Link to="/workout" className="nav-link">
             Fitness
           </Link>
-          <Link to="#nutrition" className="nav-link">
+          <Link to="/dietplan" className="nav-link">
             Nutrition
           </Link>
           <Link to="#progress" className="nav-link">
@@ -87,7 +87,7 @@ const Navbar = () => {
         <Link to="/workout" className="nav-link">
           Fitness
         </Link>
-        <Link to="#nutrition" className="nav-link">
+        <Link to="/dietplan" className="nav-link">
           Nutrition
         </Link>
         <Link to="#progress" className="nav-link">

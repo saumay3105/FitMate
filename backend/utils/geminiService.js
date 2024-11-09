@@ -223,7 +223,7 @@ Weight: ${userProfile.weight}kg
 Height: ${userProfile.height}cm
 Dietary Preferences: ${userProfile.dietaryPreferences.join(", ")}
 Additional Requirements: ${additionalComment};
-
+PLEASE ADHERE TO THE ADDITIONAL REQUIREMENTS, IF ANY
 
 make sure the dietplan is according to indian diet
 
