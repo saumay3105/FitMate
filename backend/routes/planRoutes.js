@@ -12,4 +12,7 @@ router.get("/diet/:email", planController.getDietPlan);
 router.post("/diet", planController.saveDietPlan);
 router.put("/diet", planController.updateDietPlan);
 
+router.post("/workout/regenerate", planController.regenerateWorkoutPlan);
+router.post("/diet/regenerate", planController.regenerateDietPlan);
+
 module.exports = router;

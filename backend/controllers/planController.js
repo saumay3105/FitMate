@@ -184,7 +184,6 @@ const planController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Calculate daily totals with proper type conversion
       const dailyTotalMacros = meals.reduce(
         (acc, meal) => ({
           calories: acc.calories + (Number(meal.calories) || 0),
@@ -262,6 +261,67 @@ const planController = {
       { calories: 0, proteins: 0, carbohydrates: 0, fats: 0 }
     );
   },
+
+  async regenerateWorkoutPlan(req, res) {
+    try {
+      const { email, additionalComment } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Delete existing workout plan
+      await WorkoutPlan.findOneAndDelete({ email });
+
+      // Generate new workout plan with additional comment
+      const workoutPlan = await geminiService.generateWorkoutPlan(user, additionalComment);
+      const newWorkoutPlan = new WorkoutPlan({
+        email: user.email,
+        planId: workoutPlan.planId,
+        weeklySchedule: workoutPlan.weeklySchedule,
+        startDate: workoutPlan.startDate,
+        endDate: workoutPlan.endDate,
+      });
+
+      await newWorkoutPlan.save();
+      res.json(newWorkoutPlan);
+    } catch (error) {
+      console.error("Regenerate workout plan error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  },
+
+  async regenerateDietPlan(req, res) {
+    try {
+      const { email, additionalComment } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Delete existing diet plan
+      await DietPlan.findOneAndDelete({ email });
+
+      // Generate new diet plan with additional comment
+      const dietPlan = await geminiService.generateDietPlan(user, additionalComment);
+
+      const newDietPlan = new DietPlan({
+        email: user.email,
+        planId: dietPlan.planId,
+        meals: dietPlan.meals,
+        dailyTotalMacros: dietPlan.dailyTotalMacros,
+      });
+
+      await newDietPlan.save();
+      res.json(newDietPlan);
+    } catch (error) {
+      console.error("Regenerate diet plan error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
+
 
 module.exports = planController;

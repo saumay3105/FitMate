@@ -7,15 +7,16 @@ class GeminiService {
   }
 
   sanitizeJsonString(str) {
-    str = str.replace(/```json\s*|\s*```/g, "");
-    str = str.trim();
-    str = str.replace(/'/g, '"');
-    str = str.replace(/(\w+):/g, '"$1":');
-    str = str.replace(/\\/g, "");
-    str = str.replace(/}\s*{/g, "},{");
-    str = str.replace(/\}\s*\{/g, "},{");
-    return str;
-  }
+  str = str.replace(/```json\s*|\s*```/g, "");  // Remove any markdown formatting
+  str = str.trim();
+  str = str.replace(/\\([^\w\s])/g, '\\\\$1');  // Escape backslashes correctly
+  str = str.replace(/(\w+):/g, '"$1":');  // Ensure keys are in double quotes
+  str = str.replace(/'([^']+)'/g, '"$1"');  // Ensure string values are in double quotes
+  str = str.replace(/}\s*{/g, "},{");  // Fix broken object boundaries
+  str = str.replace(/,\s*$/, '');  // Remove trailing commas
+  return str;
+}
+
 
   validateWorkoutPlan(plan, email) {
     if (!plan.planId || !plan.weeklySchedule) {
@@ -104,12 +105,16 @@ class GeminiService {
     };
   }
 
-  async generateWorkoutPlan(userProfile) {
+  async generateWorkoutPlan(userProfile, additionalComment="") {
     const prompt = `Generate a comprehensive weekly workout plan in pure JSON format (no markdown, no code blocks) for a user with the following profile:
 Age: ${userProfile.age}
 Weight: ${userProfile.weight}kg
 Height: ${userProfile.height}cm
 Fitness Goals: ${userProfile.fitnessGoals.join(", ")}
+Additional Requirements: ${additionalComment};
+
+
+make sure the response is just json, nothing else, with no syntax errors, make sure array syntax is proper...
 
 The plan should include exercises for each day of the week, considering rest days and muscle group splits. Return only a JSON object with this exact structure (no additional text), make sure the arrays have proper syntax:
 {
@@ -135,6 +140,7 @@ The plan should include exercises for each day of the week, considering rest day
     try {
       const result = await this.model.generateContent(prompt);
       const responseText = result.response.text();
+      console.log("Raw response:", responseText);
       const cleanResponse = this.sanitizeJsonString(responseText);
 
       let parsedResponse;
@@ -205,12 +211,14 @@ The plan should include exercises for each day of the week, considering rest day
     }
   }
 
-  async generateDietPlan(userProfile) {
+  async generateDietPlan(userProfile, additionalComment="") {
     const prompt = `Generate a comprehensive diet plan in pure JSON format (no markdown, no code blocks) for a user with the following profile:
 Age: ${userProfile.age}
 Weight: ${userProfile.weight}kg
 Height: ${userProfile.height}cm
 Dietary Preferences: ${userProfile.dietaryPreferences.join(", ")}
+Additional Requirements: ${additionalComment};
+
 
 make sure the dietplan is according to indian diet
 
