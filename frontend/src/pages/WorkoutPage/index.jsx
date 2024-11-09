@@ -10,6 +10,8 @@ const WorkoutPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [additionalComment, setAdditionalComment] = useState("");
+  const [showCommentModal, setShowCommentModal] = useState(false);
 
   const api = axios.create({
     baseURL: "http://localhost:4000/api",
@@ -51,16 +53,17 @@ const WorkoutPage = () => {
     }
   };
 
-
   const handleRegenerateWorkout = async () => {
     try {
       setIsLoading(true);
       setError(null);
-      const { data } = await api.post("/workout/regenerate", {
+      const { data } = await api.post("plans/workout/regenerate", {
         email: currentUser.email,
-        additionalComment: "Please regenerate my workout plan",
+        additionalComment: additionalComment,
       });
       setWorkoutPlan(data);
+      setShowCommentModal(false);
+      setAdditionalComment("");
     } catch (err) {
       setError(
         err.response?.data?.message || "Failed to regenerate workout plan"
@@ -114,12 +117,8 @@ const WorkoutPage = () => {
     return `${Math.floor(seconds / 60)} min`;
   };
 
-   if (isLoading) {
-    return (
-      <div className="loading-container">
-        Loading...
-      </div>
-    );
+  if (isLoading) {
+    return <div className="loading-container">Loading...</div>;
   }
 
   if (!currentUser) {
@@ -133,18 +132,39 @@ const WorkoutPage = () => {
   }
 
   if (!userData) {
-    return (
-      <div className="loading-container">
-        Loading user data...
-      </div>
-    );
+    return <div className="loading-container">Loading user data...</div>;
   }
 
   return (
     <div className="workout-page">
-      {error && (
-        <div className="alert error">
-          {error}
+      {error && <div className="alert error">{error}</div>}
+
+      {showCommentModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Additional Comments</h3>
+            <textarea
+              value={additionalComment}
+              onChange={(e) => setAdditionalComment(e.target.value)}
+              placeholder="Enter any specific requirements or modifications you'd like for your workout plan..."
+              rows={4}
+              className="comment-textarea"
+            />
+            <div className="modal-actions">
+              <button
+                className="btn secondary"
+                onClick={() => {
+                  setShowCommentModal(false);
+                  setAdditionalComment("");
+                }}
+              >
+                Cancel
+              </button>
+              <button className="btn primary" onClick={handleRegenerateWorkout}>
+                Generate Plan
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -225,8 +245,8 @@ const WorkoutPage = () => {
                         ))}
                       </div>
                     </div>
-                    <button 
-                      className="btn primary" 
+                    <button
+                      className="btn primary"
                       onClick={handleSavePreferences}
                     >
                       Save Changes
@@ -272,7 +292,10 @@ const WorkoutPage = () => {
             <div className="header">
               <h2>Your Weekly Workout Plan</h2>
               <div className="top-actions">
-                <button onClick={handleRegenerateWorkout} className="btn secondary">
+                <button
+                  onClick={() => setShowCommentModal(true)}
+                  className="btn secondary"
+                >
                   Regenerate Plan
                 </button>
                 <button onClick={handleEditWorkout} className="btn primary">

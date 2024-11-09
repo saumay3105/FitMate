@@ -103,7 +103,7 @@ class GeminiService {
       email,
       planId: plan.planId,
       meals,
-      dailyTotalMacros, // Include the calculated totals
+      dailyTotalMacros, 
     };
   }
 
@@ -117,6 +117,7 @@ Additional Requirements: ${additionalComment};
 
 Important: Use single numbers for reps, not ranges.
 
+PLEASE ADHERE TO THE ADDITIONAL REQUIREMENTS, IF ANY
 
 make sure the response is just json, nothing else, with no syntax errors, make sure array syntax is proper...
 

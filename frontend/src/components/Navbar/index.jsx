@@ -19,6 +19,10 @@ const Navbar = () => {
       setError("Failed to log Out");
     }
   }
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -47,7 +51,9 @@ const Navbar = () => {
           {isLoggedIn ? (
             <div className="user-section">
               <span className="user-greeting">Hi, {currentUser.email}</span>
-              <button className="cta-button">My Profile</button>
+              <button onClick={handleProfileClick} className="cta-button">
+                My Profile
+              </button>
               <button
                 className="cta-button"
                 variant="link"
@@ -91,7 +97,9 @@ const Navbar = () => {
         {isLoggedIn ? (
           <div className="user-section">
             <span className="user-greeting">Hi,{currentUser.email}</span>
-            <button className="cta-button">My Profile</button>
+            <button onClick={handleProfileClick} className="cta-button">
+              My Profile
+            </button>
             <button
               className="cta-button"
               variant="link"
