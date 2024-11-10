@@ -23,7 +23,7 @@ const Signup = () => {
       setError("");
       setLoading(true);
       const result = await signup(emailRef.current.value, passwordRef.current.value);
-      navigate('/');
+      navigate('/onboarding');
       console.log("Signup successful:", result.user);
     } catch (err) {
       console.error("Error signing up:", err);

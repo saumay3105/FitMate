@@ -11,6 +11,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import WorkoutPage from "./pages/WorkoutPage";
 import Profile from "./pages/Profile";
 import DietPlan from "./pages/DietPlan";
+import OnboardingForm from "./pages/OnboardingPage";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/workout" element={<WorkoutPage />} />
             <Route path="/dietplan" element={<DietPlan />} />
+            <Route path="/onboarding" element={<OnboardingForm />} />
           </Routes>
         </AuthProvider>
       </Router>

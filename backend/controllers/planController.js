@@ -4,7 +4,6 @@ const DietPlan = require("../models/DietPlan");
 const geminiService = require("../utils/geminiService");
 
 const planController = {
-  // Workout Plan Controllers
   async getWorkoutPlan(req, res) {
     try {
       const { email } = req.params;
@@ -126,7 +125,6 @@ const planController = {
     }
   },
 
-  // Diet Plan Controllers
   async getDietPlan(req, res) {
     try {
       const { email } = req.params;
@@ -143,12 +141,11 @@ const planController = {
 
       const dietPlan = await geminiService.generateDietPlan(user);
 
-      // Ensure dailyTotalMacros is calculated and included
       const newDietPlan = new DietPlan({
         email: user.email,
         planId: dietPlan.planId,
         meals: dietPlan.meals,
-        dailyTotalMacros: dietPlan.dailyTotalMacros, // Using the calculated totals from geminiService
+        dailyTotalMacros: dietPlan.dailyTotalMacros, 
       });
 
       await newDietPlan.save();
@@ -219,7 +216,6 @@ const planController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Calculate daily totals with proper type conversion
       const dailyTotalMacros = meals.reduce(
         (acc, meal) => ({
           calories: acc.calories + (Number(meal.calories) || 0),
@@ -248,7 +244,6 @@ const planController = {
     }
   },
 
-  // Helper method to calculate daily totals (can be used across different methods)
   _calculateDailyTotalMacros(meals) {
     return meals.reduce(
       (acc, meal) => ({
@@ -271,10 +266,8 @@ const planController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Delete existing workout plan
       await WorkoutPlan.findOneAndDelete({ email });
 
-      // Generate new workout plan with additional comment
       const workoutPlan = await geminiService.generateWorkoutPlan(
         user,
         additionalComment
@@ -304,10 +297,8 @@ const planController = {
         return res.status(404).json({ message: "User not found" });
       }
 
-      // Delete existing diet plan
       await DietPlan.findOneAndDelete({ email });
 
-      // Generate new diet plan with additional comment
       const dietPlan = await geminiService.generateDietPlan(
         user,
         additionalComment

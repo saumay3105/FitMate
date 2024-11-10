@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext"; 
 import axios from "axios";
 import "./Profile.css";
+import human from "../../assets/human.jpg";
 
 const fitnessGoalsEnum = [
   "weight loss",
@@ -136,7 +137,7 @@ const Profile = () => {
       <div className="profile-header">
         <div className="profile-image-container">
           <img
-            src={userData.profileImage || "https://via.placeholder.com/150"}
+            src={human}
             alt="Profile"
             className="profile-image"
           />
