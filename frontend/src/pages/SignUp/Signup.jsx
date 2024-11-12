@@ -34,48 +34,48 @@ const Signup = () => {
   }
 
   return (
-    <div className="signup-card">
-      <h2 className="signup-title">Sign Up</h2>
-      {error && <div className="alert-error">{error}</div>}
+    <div className="signup-page-card">
+      <h2 className="signup-page-title">Sign Up</h2>
+      {error && <div className="signup-page-alert-error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-label" htmlFor="email">Email</label>
+        <div className="signup-page-form-group">
+          <label className="signup-page-form-label" htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             ref={emailRef}
-            className="form-control"
+            className="signup-page-form-control"
             autoComplete="email"
             required
           />
         </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="password">Password</label>
+        <div className="signup-page-form-group">
+          <label className="signup-page-form-label" htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             ref={passwordRef}
-            className="form-control"
+            className="signup-page-form-control"
             autoComplete="new-password"
             required
           />
         </div>
-        <div className="form-group">
-          <label className="form-label" htmlFor="password-confirm">Confirm Password</label>
+        <div className="signup-page-form-group">
+          <label className="signup-page-form-label" htmlFor="password-confirm">Confirm Password</label>
           <input
             type="password"
             id="password-confirm"
             ref={passwordConfirmRef}
-            className="form-control"
+            className="signup-page-form-control"
             autoComplete="new-password"
             required
           />
         </div>
-        <button disabled={loading} className="submit-btn" type="submit">
+        <button disabled={loading} className="signup-page-submit-btn" type="submit">
           Sign Up
         </button>
       </form>
-      <div className="signup-footer">
+      <div className="signup-page-footer">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css"; 
+import "./Login.css";
 
 const Login = () => {
   const emailRef = useRef();
@@ -32,41 +32,41 @@ const Login = () => {
   }
 
   return (
-    <div className="card">
-      <div className="card-body">
-        <h2 className="card-title">Log In</h2>
+    <div className="login-page-card">
+      <div className="login-page-card-body">
+        <h2 className="login-page-card-title">Log In</h2>
 
-        {error && <div className="alert">{error}</div>}
+        {error && <div className="login-page-alert">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
+          <div className="login-page-form-group">
             <label>Email</label>
             <input
               type="email"
               ref={emailRef}
               autoComplete="email"
               required
-              className="form-control"
+              className="login-page-form-control"
             />
           </div>
-          <div className="form-group">
+          <div className="login-page-form-group">
             <label>Password</label>
             <input
               type="password"
               ref={passwordRef}
               autoComplete="new-password"
               required
-              className="form-control"
+              className="login-page-form-control"
             />
           </div>
-          <button disabled={loading} className="button" type="submit">
+          <button disabled={loading} className="login-page-button" type="submit">
             Log In
           </button>
         </form>
-        <div className="link-container">
+        <div className="login-page-link-container">
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
       </div>
-      <div className="link-container">
+      <div className="login-page-link-container">
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
