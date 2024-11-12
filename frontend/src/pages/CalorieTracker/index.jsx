@@ -24,7 +24,7 @@ const CalorieTracker = () => {
     try {
       const email = currentUser.email;
       const response = await axios.get(
-        `http://localhost:4000/api/calorie/tracker/${email}`
+        `https://fitmate-hp51.onrender.com/api/calorie/tracker/${email}`
       );
       setFoods(response.data.foods);
       setTargetCalories(response.data.dailyTargetCalories);
@@ -39,7 +39,7 @@ const CalorieTracker = () => {
       setIsLoading(true);
       setError(null);
       const { data } = await axios.get(
-        `http://localhost:4000/api/plans/diet/${currentUser.email}`
+        `https://fitmate-hp51.onrender.com/api/plans/diet/${currentUser.email}`
       );
       setDietPlan(data);
     } catch (err) {
@@ -54,7 +54,7 @@ const CalorieTracker = () => {
       try {
         const email = currentUser.email;
         const response = await axios.post(
-          "http://localhost:4000/api/calorie/tracker/add-food",
+          "https://fitmate-hp51.onrender.com/api/calorie/tracker/add-food",
           {
             email,
             name: newFood,
@@ -75,7 +75,7 @@ const CalorieTracker = () => {
     try {
       const email = currentUser.email;
       const response = await axios.delete(
-        `http://localhost:4000/api/calorie/tracker/delete-food`,
+        `https://fitmate-hp51.onrender.com/api/calorie/tracker/delete-food`,
         {
           data: {
             email,
@@ -95,7 +95,7 @@ const CalorieTracker = () => {
     try {
       const email = currentUser.email;
       await axios.put(
-        "http://localhost:4000/api/calorie/tracker/update-target",
+        "https://fitmate-hp51.onrender.com/api/calorie/tracker/update-target",
         {
           email,
           dailyTargetCalories: parseInt(targetCalories),
@@ -109,7 +109,7 @@ const CalorieTracker = () => {
   const resetCalorieTracker = async () => {
     try {
       const email = currentUser.email;
-      await axios.post("http://localhost:4000/api/calorie/tracker/reset", {
+      await axios.post("https://fitmate-hp51.onrender.com/api/calorie/tracker/reset", {
         email,
       });
       setFoods([]);

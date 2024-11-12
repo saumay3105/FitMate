@@ -99,7 +99,7 @@ const OnboardingForm = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/api/users", {
+      const response = await fetch("https://fitmate-hp51.onrender.com/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

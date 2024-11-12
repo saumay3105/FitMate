@@ -32,7 +32,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/users/${currentUser.email}`
+          `https://fitmate-hp51.onrender.com/api/users/${currentUser.email}`
         );
         setUserData(response.data);
         setError(null);
@@ -56,7 +56,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/users/${currentUser.email}`,
+        `https://fitmate-hp51.onrender.com/api/users/${currentUser.email}`,
         {
           age: userData.age,
           weight: userData.weight,
