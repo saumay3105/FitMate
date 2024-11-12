@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-*{
-font-family: 'Inter', sans-serif;
+* {
+    font-family: 'Inter', sans-serif;
 }
 
 
@@ -400,4 +400,76 @@ font-family: 'Inter', sans-serif;
 
 .modal-actions button {
     padding: 0.5rem 1rem;
+}
+
+.exercise-item.editing {
+    background: rgba(248, 250, 252, 0.08);
+    padding: 1.5rem;
+}
+
+.exercise-input {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(248, 250, 252, 0.1);
+    border: 1px solid rgba(248, 250, 252, 0.1);
+    border-radius: 8px;
+    color: #f8fafc;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.exercise-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.number-input {
+    width: 100%;
+    padding: 0.5rem;
+    background: rgba(248, 250, 252, 0.1);
+    border: 1px solid rgba(248, 250, 252, 0.1);
+    border-radius: 6px;
+    color: #f8fafc;
+    font-size: 0.9rem;
+}
+
+.exercise-input:focus,
+.number-input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.top-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .exercise-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .top-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .top-actions button {
+        width: 100%;
+    }
 }

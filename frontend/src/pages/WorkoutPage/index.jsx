@@ -12,6 +12,7 @@ const WorkoutPage = () => {
   const [error, setError] = useState(null);
   const [additionalComment, setAdditionalComment] = useState("");
   const [showCommentModal, setShowCommentModal] = useState(false);
+  const [editedWorkoutPlan, setEditedWorkoutPlan] = useState(null);
 
   const api = axios.create({
     baseURL: "http://localhost:4000/api",
@@ -95,15 +96,30 @@ const WorkoutPage = () => {
     }
   };
 
-  const handleEditWorkout = async () => {
+  const startEditing = () => {
+    setEditedWorkoutPlan(JSON.parse(JSON.stringify(workoutPlan)));
+    setIsEditing(true);
+  };
+
+  const handleUpdateExercise = (day, index, field, value) => {
+    setEditedWorkoutPlan((prev) => {
+      const updated = { ...prev };
+      updated.weeklySchedule[day][index][field] = value;
+      return updated;
+    });
+  };
+
+  const handleSaveWorkout = async () => {
     try {
       setIsLoading(true);
       setError(null);
       const { data } = await api.put("/plans/workout", {
-        ...workoutPlan,
+        ...editedWorkoutPlan,
         email: currentUser.email,
       });
       setWorkoutPlan(data);
+      setIsEditing(false);
+      setEditedWorkoutPlan(null);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update workout plan");
     } finally {
@@ -134,6 +150,88 @@ const WorkoutPage = () => {
   if (!userData) {
     return <div className="loading-container">Loading user data...</div>;
   }
+
+  const renderExercise = (exercise, day, index) => {
+    if (isEditing) {
+      return (
+        <div key={index} className="exercise-item editing">
+          <input
+            type="text"
+            value={editedWorkoutPlan.weeklySchedule[day][index].name}
+            onChange={(e) =>
+              handleUpdateExercise(day, index, "name", e.target.value)
+            }
+            className="exercise-input"
+          />
+          <div className="exercise-inputs">
+            <div className="input-group">
+              <label>Sets:</label>
+              <input
+                type="number"
+                value={editedWorkoutPlan.weeklySchedule[day][index].sets}
+                onChange={(e) =>
+                  handleUpdateExercise(
+                    day,
+                    index,
+                    "sets",
+                    parseInt(e.target.value)
+                  )
+                }
+                min="0"
+                className="number-input"
+              />
+            </div>
+            <div className="input-group">
+              <label>Reps:</label>
+              <input
+                type="number"
+                value={editedWorkoutPlan.weeklySchedule[day][index].reps}
+                onChange={(e) =>
+                  handleUpdateExercise(
+                    day,
+                    index,
+                    "reps",
+                    parseInt(e.target.value)
+                  )
+                }
+                min="0"
+                className="number-input"
+              />
+            </div>
+            <div className="input-group">
+              <label>Duration (sec):</label>
+              <input
+                type="number"
+                value={editedWorkoutPlan.weeklySchedule[day][index].duration}
+                onChange={(e) =>
+                  handleUpdateExercise(
+                    day,
+                    index,
+                    "duration",
+                    parseInt(e.target.value)
+                  )
+                }
+                min="0"
+                className="number-input"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div key={index} className="exercise-item">
+        <div className="exercise-name">{exercise.name}</div>
+        {exercise.sets > 0 && (
+          <div className="exercise-details">
+            {exercise.sets} sets × {exercise.reps} reps
+            {exercise.duration > 0 && ` • ${formatDuration(exercise.duration)}`}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="workout-page">
@@ -298,33 +396,43 @@ const WorkoutPage = () => {
                 >
                   Regenerate Plan
                 </button>
-                <button onClick={handleEditWorkout} className="btn primary">
-                  Edit Plan
-                </button>
+                {isEditing ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setIsEditing(false);
+                        setEditedWorkoutPlan(null);
+                      }}
+                      className="btn secondary"
+                    >
+                      Cancel
+                    </button>
+                    <button onClick={handleSaveWorkout} className="btn primary">
+                      Save Changes
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={startEditing} className="btn primary">
+                    Edit Plan
+                  </button>
+                )}
               </div>
             </div>
             <div className="days-grid">
-              {Object.entries(workoutPlan.weeklySchedule).map(
-                ([day, exercises]) => (
-                  <div key={day} className="day-card">
-                    <h3>{day.charAt(0).toUpperCase() + day.slice(1)}</h3>
-                    <div className="exercises-list">
-                      {exercises.map((exercise, index) => (
-                        <div key={index} className="exercise-item">
-                          <div className="exercise-name">{exercise.name}</div>
-                          {exercise.sets > 0 && (
-                            <div className="exercise-details">
-                              {exercise.sets} sets × {exercise.reps} reps
-                              {exercise.duration > 0 &&
-                                ` • ${formatDuration(exercise.duration)}`}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+              {Object.entries(
+                isEditing
+                  ? editedWorkoutPlan.weeklySchedule
+                  : workoutPlan.weeklySchedule
+              ).map(([day, exercises]) => (
+                <div key={day} className="day-card">
+                  <h3>{day.charAt(0).toUpperCase() + day.slice(1)}</h3>
+                  <div className="exercises-list">
+                    {exercises.map((exercise, index) =>
+                      renderExercise(exercise, day, index)
+                    )}
                   </div>
-                )
-              )}
+                </div>
+              ))}
             </div>
           </div>
         )}
