@@ -207,9 +207,9 @@ const CalorieTracker = () => {
           <h2>Food Log</h2>
           <ul>
             {foods.map((food, index) => (
-              <li key={index}>
+              <li key={index} className="flist">
                 {food.name} - {food.calories} calories{" "}
-                <button onClick={() => deleteFood(food.name, food.calories)}>
+                <button className="delete" onClick={() => deleteFood(food.name, food.calories)}>
                   Delete
                 </button>
               </li>
