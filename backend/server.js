@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/plans", planRoutes);
 app.use("/api/calorie",calorieTrackerRoutes);
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
