@@ -121,6 +121,8 @@ PLEASE ADHERE TO THE ADDITIONAL REQUIREMENTS, IF ANY
 
 make sure the response is just json, nothing else, with no syntax errors, make sure array syntax is proper...
 
+make sure there if its a rest day then write rest in name of exercise
+
 The plan should include exercises for each day of the week, considering rest days and muscle group splits. Return only a JSON object with this exact structure (no additional text), make sure the arrays have proper syntax:
 {
     "planId": "WP_123",
