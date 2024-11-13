@@ -71,7 +71,7 @@ const Navbar = () => {
                   Calorie Tracker
                 </Link>
               </div>
-              <span className="user-greeting">Hi, {userName}</span>
+              <span className="user-greeting">Hi</span>
               <button onClick={handleProfileClick} className="cta-button">
                 My Profile
               </button>
@@ -117,7 +117,7 @@ const Navbar = () => {
 
         {isLoggedIn ? (
           <div className="user-section">
-            <span className="user-greeting">Hi, {userName}</span>
+            <span className="user-greeting">Hi</span>
             <button onClick={handleProfileClick} className="cta-button">
               My Profile
             </button>

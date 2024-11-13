@@ -44,9 +44,9 @@ const OnboardingForm = () => {
         if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
         break;
       case 2:
-        if (!formData.age) newErrors.age = "Age is required";
-        if (!formData.weight) newErrors.weight = "Weight is required";
-        if (!formData.height) newErrors.height = "Height is required";
+        if (!formData.age || formData.age <= 0) newErrors.age = "Valid age is required";
+        if (!formData.weight || formData.weight <= 0) newErrors.weight = "Valid weight is required";
+        if (!formData.height || formData.height <= 0) newErrors.height = "Valid height is required";
         break;
       case 3:
         if (formData.fitnessGoals.length === 0) {
@@ -67,15 +67,23 @@ const OnboardingForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    if (errors[name]) {
+  
+    
+    if (value < 0) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Value cannot be negative",
+      }));
+    } else if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
-
+  
   const handleCheckboxChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -129,6 +137,7 @@ const OnboardingForm = () => {
           name="fullName"
           value={formData.fullName}
           onChange={handleInputChange}
+          placeholder="Enter your full name"
           className={errors.fullName ? "error" : ""}
         />
         {errors.fullName && (
@@ -147,6 +156,8 @@ const OnboardingForm = () => {
           name="age"
           value={formData.age}
           onChange={handleInputChange}
+          min="1"
+          placeholder="Enter your age"
           className={errors.age ? "error" : ""}
         />
         {errors.age && <span className="error-message">{errors.age}</span>}
@@ -158,6 +169,8 @@ const OnboardingForm = () => {
           name="weight"
           value={formData.weight}
           onChange={handleInputChange}
+          min="1"
+          placeholder="Enter your weight in kg"
           className={errors.weight ? "error" : ""}
         />
         {errors.weight && (
@@ -171,6 +184,8 @@ const OnboardingForm = () => {
           name="height"
           value={formData.height}
           onChange={handleInputChange}
+          min="1"
+          placeholder="Enter your height in cm"
           className={errors.height ? "error" : ""}
         />
         {errors.height && (
