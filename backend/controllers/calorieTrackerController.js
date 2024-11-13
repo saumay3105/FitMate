@@ -58,37 +58,44 @@ const calorieTrackerController = {
   },
 
   async deleteFood(req, res) {
-  try {
-    
-    const { email, name, calories } = req.body; 
-        console.log("Incoming data:", { email, name, calories });
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    try {
+      const { email, name, calories } = req.body;
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // First find the tracker to verify the food exists
+      const tracker = await CalorieTracker.findOne({ email });
+      const foodToDelete = tracker.foods.find(
+        (f) => f.name === name && f.calories === calories
+      );
+  
+      if (!foodToDelete) {
+        return res.status(404).json({ message: "Food item not found" });
+      }
+  
+      // Now update with the specific food item
+      const calorieTracker = await CalorieTracker.findOneAndUpdate(
+        { email },
+        {
+          $pull: { foods: { name: name, calories: calories } }, // Match both name and calories
+          $inc: { dailyTotalCalories: -Math.abs(calories) }, // Use Math.abs to ensure positive number
+        },
+        { new: true }
+      );
+  
+      if (!calorieTracker) {
+        return res.status(404).json({ message: "Calorie tracker not found" });
+      }
+  
+      res.status(200).json(calorieTracker);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
-
-    const calorieTracker = await CalorieTracker.findOneAndUpdate(
-      { email },
-      {
-        $pull: { foods: { name } },
-        $inc: { dailyTotalCalories: -calories }, 
-      },
-      { new: true }
-    );
-
-    if (!calorieTracker) {
-      return res.status(404).json({ message: "Calorie tracker not found" });
-    }
-
-    res.status(200).json({
-      foods: calorieTracker.foods,
-      dailyTotalCalories: calorieTracker.dailyTotalCalories,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-},
+  },
+  
 
 
   async updateTargetCalories(req, res) {

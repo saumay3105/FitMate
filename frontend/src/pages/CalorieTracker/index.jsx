@@ -84,8 +84,12 @@ const CalorieTracker = () => {
           },
         }
       );
-      setFoods(response.data.foods);
-      setTotalCalories(response.data.dailyTotalCalories);
+      
+      if (response.data && response.data.foods) {
+        setFoods(response.data.foods);
+        // Ensure we're setting the exact value from the server
+        setTotalCalories(response.data.dailyTotalCalories);
+      }
     } catch (error) {
       console.error("Error deleting food:", error);
     }
@@ -123,15 +127,24 @@ const CalorieTracker = () => {
     setShowNotification(totalCalories >= targetCalories);
   }, [totalCalories, targetCalories]);
 
-  const addMealToFoodLog = (meal) => {
-    setFoods([
-      ...foods,
-      {
-        name: meal.mealType,
-        calories: meal.calories,
-      },
-    ]);
-    setTotalCalories(totalCalories + meal.calories);
+  const addMealToFoodLog = async (meal) => {
+    try {
+      const response = await axios.post(
+        "https://fitmate-hp51.onrender.com/api/calorie/tracker/add-food",
+        {
+          email: currentUser.email,
+          name: meal.mealType,
+          calories: meal.calories,
+        }
+      );
+      
+      if (response.data && response.data.foods) {
+        setFoods(response.data.foods);
+        setTotalCalories(response.data.dailyTotalCalories);
+      }
+    } catch (error) {
+      console.error("Error adding meal to food log:", error);
+    }
   };
 
   if (isLoading) {
