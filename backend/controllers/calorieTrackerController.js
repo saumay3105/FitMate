@@ -66,7 +66,6 @@ const calorieTrackerController = {
         return res.status(404).json({ message: "User not found" });
       }
   
-      // First find the tracker to verify the food exists
       const tracker = await CalorieTracker.findOne({ email });
       const foodToDelete = tracker.foods.find(
         (f) => f.name === name && f.calories === calories
@@ -76,12 +75,11 @@ const calorieTrackerController = {
         return res.status(404).json({ message: "Food item not found" });
       }
   
-      // Now update with the specific food item
       const calorieTracker = await CalorieTracker.findOneAndUpdate(
         { email },
         {
-          $pull: { foods: { name: name, calories: calories } }, // Match both name and calories
-          $inc: { dailyTotalCalories: -Math.abs(calories) }, // Use Math.abs to ensure positive number
+          $pull: { foods: { name: name, calories: calories } }, 
+          $inc: { dailyTotalCalories: -Math.abs(calories) }, 
         },
         { new: true }
       );

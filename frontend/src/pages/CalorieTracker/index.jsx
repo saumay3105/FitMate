@@ -87,7 +87,6 @@ const CalorieTracker = () => {
       
       if (response.data && response.data.foods) {
         setFoods(response.data.foods);
-        // Ensure we're setting the exact value from the server
         setTotalCalories(response.data.dailyTotalCalories);
       }
     } catch (error) {

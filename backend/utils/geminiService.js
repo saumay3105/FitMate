@@ -166,7 +166,6 @@ The plan should include exercises for each day of the week, considering rest day
       console.error("Workout plan generation error:", error);
       console.error("Error details:", error.message);
 
-      // Fallback workout plan
       const fallbackPlan = {
         planId: `WP_${Date.now()}`,
         weeklySchedule: {
@@ -337,7 +336,6 @@ The plan should include a variety of balanced meals throughout the day with deta
       console.error("Diet plan generation error:", error);
       console.error("Error details:", error.message);
 
-      // Fallback diet plan
       const fallbackPlan = {
         planId: `DP_${Date.now()}`,
         meals: [
