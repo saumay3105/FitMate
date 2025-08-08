@@ -14,7 +14,7 @@ const DietPlan = () => {
   const [showCommentModal, setShowCommentModal] = useState(false);
 
   const api = axios.create({
-    baseURL: "https://fitmate-hp51.onrender.com/api",
+    baseURL: "http://localhost:4000/api",
     headers: {
       "Content-Type": "application/json",
     },

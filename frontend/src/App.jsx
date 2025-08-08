@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import DietPlan from "./pages/DietPlan";
 import OnboardingForm from "./pages/OnboardingPage";
 import CalorieTracker from "./pages/CalorieTracker";
+import Analytics from "./pages/Analytics";
 function App() {
   return (
     <>
@@ -28,7 +29,8 @@ function App() {
             <Route path="/workout" element={<WorkoutPage />} />
             <Route path="/dietplan" element={<DietPlan />} />
             <Route path="/onboarding" element={<OnboardingForm />} />
-            <Route path = "/calorie-tracker" element = {<CalorieTracker/>}/>
+            <Route path="/calorie-tracker" element={<CalorieTracker />} />
+            <Route path="/analytics" element={<Analytics />} />
           </Routes>
         </AuthProvider>
       </Router>

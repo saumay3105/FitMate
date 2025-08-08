@@ -15,7 +15,7 @@ const WorkoutPage = () => {
   const [editedWorkoutPlan, setEditedWorkoutPlan] = useState(null);
 
   const api = axios.create({
-    baseURL: "https://fitmate-hp51.onrender.com/api",
+    baseURL: "http://localhost:4000/api",
     headers: {
       "Content-Type": "application/json",
     },

@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: true,
-    trim: true, 
+    trim: true,
   },
   email: {
     type: String,
@@ -47,6 +47,12 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+// Create indexes for frequently queried fields
+userSchema.index({ email: 1 }, { unique: true }); // Email lookup
+userSchema.index({ fitnessGoals: 1 }); // Fitness goals queries
+userSchema.index({ dietaryPreferences: 1 }); // Dietary preferences queries
+userSchema.index({ weight: 1, height: 1 }); // Compound index for physical attributes
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

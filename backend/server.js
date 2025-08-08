@@ -7,6 +7,7 @@ const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const planRoutes = require("./routes/planRoutes");
 const calorieTrackerRoutes = require("./routes/calorieTrackerRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
 const app = express();
 
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/plans", planRoutes);
 app.use("/api/calorie", calorieTrackerRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.get("/health", (req, res) => {
   res.status(200).send("Server is running");
@@ -31,7 +33,7 @@ app.listen(PORT, () => {
 const pingServer = async () => {
   try {
     const response = await axios.get(
-      `https://fitmate-hp51.onrender.com/health`
+      `http://localhost:4000/health`
     );
     if (response.status === 200) {
       console.log("Server pinged successfully");

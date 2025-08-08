@@ -24,7 +24,7 @@ const CalorieTracker = () => {
     try {
       const email = currentUser.email;
       const response = await axios.get(
-        `https://fitmate-hp51.onrender.com/api/calorie/tracker/${email}`
+        `http://localhost:4000/api/calorie/tracker/${email}`
       );
       setFoods(response.data.foods);
       setTargetCalories(response.data.dailyTargetCalories);
@@ -38,9 +38,7 @@ const CalorieTracker = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const { data } = await axios.get(
-        `https://fitmate-hp51.onrender.com/api/plans/diet/${currentUser.email}`
-      );
+      const { data } = await axios.get(`api/plans/diet/${currentUser.email}`);
       setDietPlan(data);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch diet plan");
@@ -54,7 +52,7 @@ const CalorieTracker = () => {
       try {
         const email = currentUser.email;
         const response = await axios.post(
-          "https://fitmate-hp51.onrender.com/api/calorie/tracker/add-food",
+          "http://localhost:4000/api/calorie/tracker/add-food",
           {
             email,
             name: newFood,
@@ -74,17 +72,14 @@ const CalorieTracker = () => {
   const deleteFood = async (name, calories) => {
     try {
       const email = currentUser.email;
-      const response = await axios.delete(
-        `https://fitmate-hp51.onrender.com/api/calorie/tracker/delete-food`,
-        {
-          data: {
-            email,
-            name,
-            calories,
-          },
-        }
-      );
-      
+      const response = await axios.delete(`api/calorie/tracker/delete-food`, {
+        data: {
+          email,
+          name,
+          calories,
+        },
+      });
+
       if (response.data && response.data.foods) {
         setFoods(response.data.foods);
         setTotalCalories(response.data.dailyTotalCalories);
@@ -98,7 +93,7 @@ const CalorieTracker = () => {
     try {
       const email = currentUser.email;
       await axios.put(
-        "https://fitmate-hp51.onrender.com/api/calorie/tracker/update-target",
+        "http://localhost:4000/api/calorie/tracker/update-target",
         {
           email,
           dailyTargetCalories: parseInt(targetCalories),
@@ -112,7 +107,7 @@ const CalorieTracker = () => {
   const resetCalorieTracker = async () => {
     try {
       const email = currentUser.email;
-      await axios.post("https://fitmate-hp51.onrender.com/api/calorie/tracker/reset", {
+      await axios.post("http://localhost:4000/api/calorie/tracker/reset", {
         email,
       });
       setFoods([]);
@@ -129,14 +124,14 @@ const CalorieTracker = () => {
   const addMealToFoodLog = async (meal) => {
     try {
       const response = await axios.post(
-        "https://fitmate-hp51.onrender.com/api/calorie/tracker/add-food",
+        "http://localhost:4000/api/calorie/tracker/add-food",
         {
           email: currentUser.email,
           name: meal.mealType,
           calories: meal.calories,
         }
       );
-      
+
       if (response.data && response.data.foods) {
         setFoods(response.data.foods);
         setTotalCalories(response.data.dailyTotalCalories);
@@ -221,7 +216,10 @@ const CalorieTracker = () => {
             {foods.map((food, index) => (
               <li key={index} className="flist">
                 {food.name} - {food.calories} calories{" "}
-                <button className="delete" onClick={() => deleteFood(food.name, food.calories)}>
+                <button
+                  className="delete"
+                  onClick={() => deleteFood(food.name, food.calories)}
+                >
                   Delete
                 </button>
               </li>
@@ -243,7 +241,9 @@ const CalorieTracker = () => {
               setTargetCalories(parseInt(event.target.value) || 0);
             }}
           />
-          <button className="reset" onClick={updateTargetCalories}>Update Target</button>
+          <button className="reset" onClick={updateTargetCalories}>
+            Update Target
+          </button>
           <button className="reset" onClick={resetCalorieTracker}>
             Reset Tracker
           </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../../context/AuthContext"; 
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import "./Profile.css";
 import human from "../../assets/human.jpg";
@@ -31,9 +31,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          `https://fitmate-hp51.onrender.com/api/users/${currentUser.email}`
-        );
+        const response = await axios.get(`/api/users/${currentUser.email}`);
         setUserData(response.data);
         setError(null);
       } catch (err) {
@@ -56,7 +54,7 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `https://fitmate-hp51.onrender.com/api/users/${currentUser.email}`,
+        `http://localhost:4000/api/users/${currentUser.email}`,
         {
           age: userData.age,
           weight: userData.weight,
@@ -136,11 +134,7 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-header">
         <div className="profile-image-container">
-          <img
-            src={human}
-            alt="Profile"
-            className="profile-image"
-          />
+          <img src={human} alt="Profile" className="profile-image" />
           <div className="profile-image-overlay">
             <i className="fas fa-camera"></i>
           </div>

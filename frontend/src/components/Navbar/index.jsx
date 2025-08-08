@@ -16,7 +16,7 @@ const Navbar = () => {
     const fetchUserName = async () => {
       try {
         const response = await axios.get(
-          `https://fitmate-hp51.onrender.com/api/users/${currentUser?.email}`
+          `http://localhost:4000/api/users/${currentUser?.email}`
         );
         setUserName(response.data.fullName);
       } catch (error) {
@@ -70,6 +70,9 @@ const Navbar = () => {
                 <Link to="/calorie-tracker" className="nav-link">
                   Calorie Tracker
                 </Link>
+                <Link to="/analytics" className="nav-link">
+                  Analytics
+                </Link>
               </div>
               <span className="user-greeting">Hi</span>
               <button onClick={handleProfileClick} className="cta-button">
@@ -113,6 +116,9 @@ const Navbar = () => {
         </Link>
         <Link to="/calorie-tracker" className="nav-link">
           Calorie Tracker
+        </Link>
+        <Link to="/analytics" className="nav-link">
+          Analytics
         </Link>
 
         {isLoggedIn ? (

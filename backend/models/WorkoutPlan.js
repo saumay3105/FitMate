@@ -89,5 +89,12 @@ const workoutPlanSchema = new mongoose.Schema({
   },
 });
 
+// Create indexes for frequently queried fields
+workoutPlanSchema.index({ email: 1 }); // User email lookup
+workoutPlanSchema.index({ planId: 1 }, { unique: true }); // Plan ID lookup
+workoutPlanSchema.index({ startDate: 1, endDate: 1 }); // Date range queries
+workoutPlanSchema.index({ "weeklySchedule.monday.name": 1 }); // Exercise name lookup
+workoutPlanSchema.index({ email: 1, startDate: -1 }); // Compound index for user's recent workouts
+
 const WorkoutPlan = mongoose.model("WorkoutPlan", workoutPlanSchema);
 module.exports = WorkoutPlan;
